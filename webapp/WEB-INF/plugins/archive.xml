@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?><plug-in>
+
+    <!-- Plugin Informations -->
+    <name>archive</name>
+    <class>fr.paris.lutece.plugins.archive.service.archive.ArchivePlugin</class>
+    <version>1.0.0-SNAPSHOT</version>
+    <description>archive.plugin.description</description>
+    <documentation/>
+    <installation/>
+    <changes/>
+    <user-guide/>
+    <provider>archive.plugin.provider</provider>
+    <provider-url>http://www.lutece.paris.fr</provider-url>
+    <icon-url>images/admin/skin/plugins/includeurlbandeau/includeurlbandeau.png</icon-url>
+    <copyright>Copyright (c) City of Paris</copyright>
+    <db-pool-required>1</db-pool-required>
+
+    
+    <daemons>
+        <daemon>
+            <daemon-id>archiveIndexer</daemon-id>
+            <daemon-name>
+                archive.daemon.archiveIndexer.name
+			</daemon-name>
+            <daemon-description>
+                archive.daemon.archiveIndexer.description
+			</daemon-description>
+            <daemon-class>
+                fr.paris.lutece.plugins.archive.service.archive.DaemonArchive
+			</daemon-class>
+        </daemon>
+    </daemons>
+   
+   
+   
+   </plug-in>

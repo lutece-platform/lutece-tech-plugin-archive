@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+ 	<bean id="archive.archiveItemDAO"  class="fr.paris.lutece.plugins.archive.business.ArchiveItemDAO" />
+ 	<bean id="archive.zipGenerateService"  class="fr.paris.lutece.plugins.archive.service.archive.ZipGenerateService" />
+	<bean id="archive.generateArchiveServiceFactory"  class="fr.paris.lutece.plugins.archive.service.archive.GenerateArchiveServiceFactory" />	
+	<bean id="archive.archiveService"  class="fr.paris.lutece.plugins.archive.service.archive.ArchiveService" >
+		<property name="generateArchiveServiceFactory" ref="archive.generateArchiveServiceFactory"/>
+	</bean>
+	
+	
+
+</beans>
+ 	
