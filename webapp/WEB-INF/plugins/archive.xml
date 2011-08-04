@@ -30,6 +30,28 @@
 			</daemon-class>
         </daemon>
     </daemons>
+    <filters>
+       <filter>
+           <filter-name>archiveWsSecurity</filter-name>
+           <url-pattern>/jsp/site/plugins/archive/DoDownloadArchive.jsp</url-pattern>
+           <filter-class>fr.paris.lutece.util.signrequest.servlet.ParameterHashRequestFilter</filter-class>
+
+           <init-param>
+               <param-name>elementsSignature</param-name>
+               <param-value>archive_item_key</param-value>
+           </init-param>
+
+           <init-param>
+               <param-name>validityTimePeriod</param-name>
+               <param-value>0</param-value>
+           </init-param>
+
+           <init-param>
+               <param-name>privateKey</param-name>
+               <param-value>change me</param-value>
+           </init-param>
+       </filter>
+   </filters>
    
    
    
