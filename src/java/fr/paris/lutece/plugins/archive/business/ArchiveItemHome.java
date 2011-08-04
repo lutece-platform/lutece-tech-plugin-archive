@@ -38,7 +38,7 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 
 /**
- * This class provides Data Access methods for MailItemQueue objects
+ * This class provides Data Access methods for ArchiveItem objects
  */
 public final class ArchiveItemHome
 {
@@ -46,61 +46,71 @@ public final class ArchiveItemHome
     private static IArchiveItemDAO _dao = (IArchiveItemDAO) SpringContextService.getBean( "archive.archiveItemDAO" );
 
     /**
-     * Creates a new MailItemQueueHome object.
+     * Creates a new ArchiveItemHome object.
      */
     private ArchiveItemHome(  )
     {
     }
 
     /**
-     * Insert a new mail item in the database queue.
-     * @param mailItemQueue the mail item to insert
+     * Insert a new archive item in the database queue.
+     * @param archiveItem the archive item to insert
+     * @param plugin {@link Plugin}
+     * @return the id of the archive item
      */
-    public static int create( ArchiveItem archiveItem,Plugin plugin )
+    public static int create( ArchiveItem archiveItem, Plugin plugin )
     {
-       return _dao.insert( archiveItem,plugin );
+        return _dao.insert( archiveItem, plugin );
     }
 
     /**
-     * Delete  the mail item record in the table
-     * @param nIdMailItemQueue The indentifier of the mail item to remove
+     * Delete  the archive item record in the table
+     * @param nIdArchiveItem The indentifier of the archive item to remove
+     * @param plugin {@link Plugin}
+     *
      */
-    public static void delete( int nIdMailItemQueue,Plugin plugin )
+    public static void delete( int nIdArchiveItem, Plugin plugin )
     {
-        _dao.delete( nIdMailItemQueue,plugin  );
+        _dao.delete( nIdArchiveItem, plugin );
     }
 
     /**
-     * Return the first mail item in the queue
-     * @return the first mail item in the queue
+     * Return the first archive item in the queue
+     * @param plugin {@link Plugin}
+     * @return the first archive item in the queue
      */
-    public static ArchiveItem getNextMailItemQueue(Plugin plugin  )
+    public static ArchiveItem getNextArchiveItemQueue( Plugin plugin )
     {
         //get the id of the next mail item queue
-        int nIdArchiveItem = _dao.nextArchiveItemId(plugin);
+        int nIdArchiveItem = _dao.nextArchiveItemId( plugin );
 
         if ( nIdArchiveItem != -1 )
         {
-        	return findByPrimaryKey(nIdArchiveItem, plugin);
+            return findByPrimaryKey( nIdArchiveItem, plugin );
         }
 
         return null;
     }
-    
-    
-    
-     public static void updateState( int nIdArchiveItem, String strState,Plugin plugin)
-     {
-    	 _dao.updateState( nIdArchiveItem, strState,plugin);
-	     	 	 
-     }
-     
-     
-     public static ArchiveItem findByPrimaryKey( int nKey, Plugin plugin )
-     {
-         return _dao.load( nKey, plugin );
-     }
-     
-     
-    
+
+    /**
+     * update the archive state
+     * @param nIdArchiveItem the id of the archive item
+     * @param strState the new state
+     * @param plugin {@link Plugin}
+     */
+    public static void updateState( int nIdArchiveItem, String strState, Plugin plugin )
+    {
+        _dao.updateState( nIdArchiveItem, strState, plugin );
+    }
+
+    /**
+     * load the archive item wich the id is specified in parameter
+     * @param nKey the archive item id
+     * @param plugin {@link Plugin}
+     * @return {@link ArchiveItem}
+     */
+    public static ArchiveItem findByPrimaryKey( int nKey, Plugin plugin )
+    {
+        return _dao.load( nKey, plugin );
+    }
 }

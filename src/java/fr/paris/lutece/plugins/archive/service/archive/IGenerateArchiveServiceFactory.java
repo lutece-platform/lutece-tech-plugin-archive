@@ -38,21 +38,21 @@ import java.util.Collection;
 
 /**
  *
- * ITaskFactory
+ * IGenerateArchiveServiceFactory
  *
  */
 public interface IGenerateArchiveServiceFactory
 {
     /**
-     * return an instance of Task Object depending on the task type
-     * @param strKey the type task key
-     * @return an instance of Task  Object
+     * return an instance of Task IGenerateArchiveService depending on the GenerateArchiveService type
+     * @param strKey the type GenerateArchiveService key
+     * @return an instance of GenerateArchiveService Object
      */
     IGenerateArchiveService getGenerateArchiveService( String strKey );
 
     /**
      *
-     * @return a collection of TaskType
+     * @return a collection of GenerateArchiveService
      */
     Collection<IGenerateArchiveService> getAllGenerateArchiveServiceType(  );
 }

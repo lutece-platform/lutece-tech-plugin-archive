@@ -33,13 +33,6 @@
  */
 package fr.paris.lutece.plugins.archive.util;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import fr.paris.lutece.plugins.archive.business.ArchiveItem;
 import fr.paris.lutece.plugins.archive.business.ArchiveItemHome;
 import fr.paris.lutece.plugins.archive.service.archive.ArchivePlugin;
@@ -49,6 +42,13 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 
 /**
  *
@@ -57,8 +57,6 @@ import fr.paris.lutece.portal.service.util.AppLogService;
  */
 public class DoDownloadArchive
 {
-    
-	
     /**
      * Write in the http response the file to upload
      * @param request the http request
@@ -70,71 +68,73 @@ public class DoDownloadArchive
     {
         Plugin plugin = PluginService.getPlugin( ArchivePlugin.PLUGIN_NAME );
         String strArchiveItemKey = request.getParameter( ArchiveConstants.PARAM_ARCHIVE_ITEM_KEY );
-        int nArchiveItemKey  = -1;
-        
+        int nArchiveItemKey = -1;
+
         try
         {
-        	nArchiveItemKey=Integer.parseInt(strArchiveItemKey);	
+            nArchiveItemKey = Integer.parseInt( strArchiveItemKey );
         }
-        catch (NumberFormatException ne) {
-        	AppLogService.error(ne);
-        }
-        
-                
-         	ArchiveItem archiveItem = ArchiveItemHome.findByPrimaryKey(
-         			nArchiveItemKey, plugin);
-    		if (archiveItem != null) {
+        catch ( NumberFormatException ne )
         {
-            
-        	OutputStream os=null;
-        	FileInputStream bis=null;
-        	
-            	try {
-            		
-            	    
-                    response.setHeader( "Content-Disposition", "attachment ;filename=\"" + archiveItem.getArchiveName() + "\"" );
+            AppLogService.error( ne );
+        }
+
+        ArchiveItem archiveItem = ArchiveItemHome.findByPrimaryKey( nArchiveItemKey, plugin );
+
+        if ( archiveItem != null )
+        {
+            {
+                OutputStream os = null;
+                FileInputStream bis = null;
+
+                try
+                {
+                    response.setHeader( "Content-Disposition",
+                        "attachment ;filename=\"" + archiveItem.getArchiveName(  ) + "\"" );
                     response.setHeader( "Pragma", "public" );
                     response.setHeader( "Expires", "0" );
                     response.setHeader( "Cache-Control", "must-revalidate,post-check=0,pre-check=0" );
 
-            		response.setContentType( archiveItem.getArchiveMimeType(  ) );
-                    
-            		os = response.getOutputStream(  );
-                    bis = new FileInputStream(ArchiveUtil.getFilePath(archiveItem));
+                    response.setContentType( archiveItem.getArchiveMimeType(  ) );
 
-					
-					byte[] tab = new byte[ArchiveConstants.CONSTANTE_FILE_BUFFER];
-					int read = -1;
+                    os = response.getOutputStream(  );
+                    bis = new FileInputStream( ArchiveUtil.getFilePath( archiveItem ) );
 
-					do {
-						read = bis.read(tab);
+                    byte[] tab = new byte[ArchiveConstants.CONSTANTE_FILE_BUFFER];
+                    int read = -1;
 
-						if (read > 0) {
-							os.write(tab, 0, read);
-						}
-					} while (read > 0);
+                    do
+                    {
+                        read = bis.read( tab );
 
-					
-				}
-            	 catch ( IOException e )
-                 {
-                     AppLogService.error( e );
-                 }
+                        if ( read > 0 )
+                        {
+                            os.write( tab, 0, read );
+                        }
+                    }
+                    while ( read > 0 );
+                }
+                catch ( IOException e )
+                {
+                    AppLogService.error( e );
+                }
 
-				finally {
-					try {
-						bis.close();
-						os.close(  );
-					} catch (IOException e) {
-					
-						AppLogService.error(e);
-					}
-					
-	            	}
-				}  
-           
+                finally
+                {
+                    try
+                    {
+                        bis.close(  );
+                        os.close(  );
+                    }
+                    catch ( IOException e )
+                    {
+                        AppLogService.error( e );
+                    }
+                }
+            }
         }
 
-        return AdminMessageService.getMessageUrl( request, ArchiveConstants.MESSAGE_ERROR_DURING_DOWNLOAD_FILE, AdminMessage.TYPE_STOP );
+        return AdminMessageService.getMessageUrl( request, ArchiveConstants.MESSAGE_ERROR_DURING_DOWNLOAD_FILE,
+            AdminMessage.TYPE_STOP );
     }
 }

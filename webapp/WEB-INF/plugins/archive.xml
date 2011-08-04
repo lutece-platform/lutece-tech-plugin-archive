@@ -11,7 +11,7 @@
     <user-guide/>
     <provider>archive.plugin.provider</provider>
     <provider-url>http://www.lutece.paris.fr</provider-url>
-    <icon-url>images/admin/skin/plugins/includeurlbandeau/includeurlbandeau.png</icon-url>
+    <icon-url>images/admin/skin/plugins/archive/archive.png</icon-url>
     <copyright>Copyright (c) City of Paris</copyright>
     <db-pool-required>1</db-pool-required>
 

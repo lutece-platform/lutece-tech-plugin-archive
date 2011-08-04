@@ -37,17 +37,16 @@ import fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation;
 
 
 /**
- * class FormPlugin
+ * class ArchivePlugin
  */
 public class ArchivePlugin extends PluginDefaultImplementation
 {
     public static final String PLUGIN_NAME = "archive";
 
     /**
-     * Initialize the plugin form
+     * Initialize plugin
      */
     public void init(  )
     {
-      
     }
 }

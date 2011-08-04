@@ -41,22 +41,24 @@ import fr.paris.lutece.util.sql.DAOUtil;
 /**
  * This class provides Data Access methods for MailItemQueue objects
  */
-public class ArchiveItemDAO implements IArchiveItemDAO 
+public class ArchiveItemDAO implements IArchiveItemDAO
 {
     private static final String SQL_QUERY_NEW_PK = "SELECT max(id_archive_item) FROM archive_item";
-    private static final String SQL_QUERY_SELECT_NEXT_MAIL_ITEM_QUEUE_ID = "SELECT min(id_archive_item) FROM archive_item WHERE state='"+ArchiveConstants.ARCHIVE_STATE_INITIAL+"'";
-   private static final String SQL_QUERY_LOAD_ARCHIVE_ITEM = "SELECT id_archive_item,folder_to_archive,archive_destination,archive_name,archive_type,archive_mime_type,state FROM archive_item WHERE id_archive_item = ? ";
+    private static final String SQL_QUERY_SELECT_NEXT_MAIL_ITEM_QUEUE_ID = "SELECT min(id_archive_item) FROM archive_item WHERE state='" +
+        ArchiveConstants.ARCHIVE_STATE_INITIAL + "'";
+    private static final String SQL_QUERY_LOAD_ARCHIVE_ITEM = "SELECT id_archive_item,folder_to_archive,archive_destination,archive_name,archive_type,archive_mime_type,state FROM archive_item WHERE id_archive_item = ? ";
     private static final String SQL_QUERY_INSERT = " INSERT INTO archive_item( id_archive_item,folder_to_archive,archive_destination,archive_name,archive_type,archive_mime_type,state) VALUES( ? ,? ,? ,? ,?,?,?) ";
     private static final String SQL_QUERY_UPDATE_STATE = " UPDATE archive_item SET state=? WHERE id_archive_item = ? ";
     private static final String SQL_QUERY_DELETE_ARCHIVE_ITEM = " DELETE FROM archive_item WHERE id_archive_item = ?";
 
     /**
      * Generates a new primary key
+     *
      * @return The new primary key
      */
-    private int newPrimaryKey( Plugin plugin  )
+    private int newPrimaryKey( Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK ,plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
         daoUtil.executeQuery(  );
 
         int nKey;
@@ -74,10 +76,7 @@ public class ArchiveItemDAO implements IArchiveItemDAO
         return nKey;
     }
 
-    /* (non-Javadoc)
-	 * @see fr.paris.lutece.plugins.archive.business.IArchiveItemDAO#nextMailItemQueueId(fr.paris.lutece.portal.service.plugin.Plugin)
-	 */
-    public int nextArchiveItemId(  Plugin plugin  )
+    public int nextArchiveItemId( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_NEXT_MAIL_ITEM_QUEUE_ID );
 
@@ -95,67 +94,65 @@ public class ArchiveItemDAO implements IArchiveItemDAO
         return nIdMailItemQueue;
     }
 
-    /* (non-Javadoc)
-	 * @see fr.paris.lutece.plugins.archive.business.IArchiveItemDAO#updateState(int, java.lang.String, fr.paris.lutece.portal.service.plugin.Plugin)
-	 */
-    public void updateState( int nIdArchiveItem,String strState, Plugin plugin  )
+    /*
+     * (non-Javadoc)
+     * @see fr.paris.lutece.plugins.archive.business.IArchiveItemDAO#updateState(int, java.lang.String, fr.paris.lutece.portal.service.plugin.Plugin)
+     */
+    public void updateState( int nIdArchiveItem, String strState, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE_STATE,plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE_STATE, plugin );
         daoUtil.setString( 1, strState );
         daoUtil.setInt( 2, nIdArchiveItem );
-       
+
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
     }
 
-    /* (non-Javadoc)
-	 * @see fr.paris.lutece.plugins.archive.business.IArchiveItemDAO#insert(fr.paris.lutece.plugins.archive.business.ArchiveItem, fr.paris.lutece.portal.service.plugin.Plugin)
-	 */
-    public synchronized int insert( ArchiveItem archiveItem, Plugin plugin  )
+    /*
+     * (non-Javadoc)
+     * @see fr.paris.lutece.plugins.archive.business.IArchiveItemDAO#insert(fr.paris.lutece.plugins.archive.business.ArchiveItem, fr.paris.lutece.portal.service.plugin.Plugin)
+     */
+    public synchronized int insert( ArchiveItem archiveItem, Plugin plugin )
     {
-    	
-    	int nIdPrimaryKey=newPrimaryKey(plugin );
-    	DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT,plugin );
-        
-    	daoUtil.setInt( 1, nIdPrimaryKey );
-    	daoUtil.setString( 2, archiveItem.getFolderToArchive() );
-    	daoUtil.setString( 3,  archiveItem.getArchiveDestination());
-    	daoUtil.setString( 4, archiveItem.getArchiveName());
-    	daoUtil.setString( 5, archiveItem.getArchiveType());
-    	daoUtil.setString( 6, archiveItem.getArchiveMimeType());
-    	daoUtil.setString( 7, archiveItem.getState());
-    	
+        int nIdPrimaryKey = newPrimaryKey( plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
+
+        daoUtil.setInt( 1, nIdPrimaryKey );
+        daoUtil.setString( 2, archiveItem.getFolderToArchive(  ) );
+        daoUtil.setString( 3, archiveItem.getArchiveDestination(  ) );
+        daoUtil.setString( 4, archiveItem.getArchiveName(  ) );
+        daoUtil.setString( 5, archiveItem.getArchiveType(  ) );
+        daoUtil.setString( 6, archiveItem.getArchiveMimeType(  ) );
+        daoUtil.setString( 7, archiveItem.getState(  ) );
+
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
-        
+
         return nIdPrimaryKey;
     }
 
-    /* (non-Javadoc)
-	 * @see fr.paris.lutece.plugins.archive.business.IArchiveItemDAO#load(int, fr.paris.lutece.portal.service.plugin.Plugin)
-	 */
-    public ArchiveItem load( int nIdMailItemQueue, Plugin plugin  )
+    /*
+     *  (non-Javadoc)
+     * @see fr.paris.lutece.plugins.archive.business.IArchiveItemDAO#load(int, fr.paris.lutece.portal.service.plugin.Plugin)
+     */
+    public ArchiveItem load( int nIdMailItemQueue, Plugin plugin )
     {
         ArchiveItem archiveItem = null;
-        
-        DAOUtil daoUtil = new DAOUtil(SQL_QUERY_LOAD_ARCHIVE_ITEM, plugin );
-        daoUtil.setInt( 1,nIdMailItemQueue );
-        daoUtil.executeQuery(  );
 
-        
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_LOAD_ARCHIVE_ITEM, plugin );
+        daoUtil.setInt( 1, nIdMailItemQueue );
+        daoUtil.executeQuery(  );
 
         if ( daoUtil.next(  ) )
         {
-        	archiveItem=new ArchiveItem();
-        	archiveItem.setIdArchiveItem(daoUtil.getInt(1));
-        	archiveItem.setFolderToArchive(daoUtil.getString(2));
-        	archiveItem.setArchiveDestination(daoUtil.getString(3));
-        	archiveItem.setArchiveName(daoUtil.getString(4));
-        	archiveItem.setArchiveType(daoUtil.getString(5));
-        	archiveItem.setArchiveMimeType(daoUtil.getString(6));
-        	archiveItem.setState(daoUtil.getString(7));
-        	
-        	
+            archiveItem = new ArchiveItem(  );
+            archiveItem.setIdArchiveItem( daoUtil.getInt( 1 ) );
+            archiveItem.setFolderToArchive( daoUtil.getString( 2 ) );
+            archiveItem.setArchiveDestination( daoUtil.getString( 3 ) );
+            archiveItem.setArchiveName( daoUtil.getString( 4 ) );
+            archiveItem.setArchiveType( daoUtil.getString( 5 ) );
+            archiveItem.setArchiveMimeType( daoUtil.getString( 6 ) );
+            archiveItem.setState( daoUtil.getString( 7 ) );
         }
 
         daoUtil.free(  );
@@ -163,16 +160,15 @@ public class ArchiveItemDAO implements IArchiveItemDAO
         return archiveItem;
     }
 
-    /* (non-Javadoc)
-	 * @see fr.paris.lutece.plugins.archive.business.IArchiveItemDAO#delete(int, fr.paris.lutece.portal.service.plugin.Plugin)
-	 */
-    public void delete( int nIdMailItemQueue, Plugin plugin  )
+    /*
+     * (non-Javadoc)
+     * @see fr.paris.lutece.plugins.archive.business.IArchiveItemDAO#delete(int, fr.paris.lutece.portal.service.plugin.Plugin)
+     */
+    public void delete( int nIdMailItemQueue, Plugin plugin )
     {
-    	 DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_ARCHIVE_ITEM, plugin );
-         daoUtil.setInt( 1, nIdMailItemQueue );
-         daoUtil.executeUpdate(  );
-         daoUtil.free(  );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_ARCHIVE_ITEM, plugin );
+        daoUtil.setInt( 1, nIdMailItemQueue );
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
     }
-
-   
 }

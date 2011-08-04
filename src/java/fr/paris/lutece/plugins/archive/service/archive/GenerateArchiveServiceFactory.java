@@ -33,43 +33,46 @@
  */
 package fr.paris.lutece.plugins.archive.service.archive;
 
-import java.util.Collection;
-
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
+import java.util.Collection;
+
+
 /**
- * TaskFactory
+ * GenerateArchiveServiceFactory
  */
-public class GenerateArchiveServiceFactory implements
-		IGenerateArchiveServiceFactory {
+public class GenerateArchiveServiceFactory implements IGenerateArchiveServiceFactory
+{
+    /*
+     * (non-Javadoc)
+     * @see fr.paris.lutece.plugins.archive.service.archive.IGenerateArchiveServiceFactory#getGenerateArchiveService(java.lang.String)
+     */
+    public IGenerateArchiveService getGenerateArchiveService( String strKey )
+    {
+        if ( strKey == null )
+        {
+            return null;
+        }
 
-	/**
-	 * 
-	 * {@inheritDoc}
-	 */
-	public IGenerateArchiveService getGenerateArchiveService(String strKey) {
-		if (strKey == null) {
-			return null;
-		}
+        Collection<IGenerateArchiveService> listGenerateArchiveService = getAllGenerateArchiveServiceType(  );
 
-		Collection<IGenerateArchiveService> listGenerateArchiveService = getAllGenerateArchiveServiceType();
+        for ( IGenerateArchiveService generateArchiveService : listGenerateArchiveService )
+        {
+            if ( strKey.equals( generateArchiveService.getKey(  ) ) )
+            {
+                return generateArchiveService;
+            }
+        }
 
-		for (IGenerateArchiveService generateArchiveService : listGenerateArchiveService) {
-			if (strKey.equals(generateArchiveService.getKey())) {
+        return null;
+    }
 
-				return generateArchiveService;
-
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * 
-	 * {@inheritDoc}
-	 */
-	public Collection<IGenerateArchiveService> getAllGenerateArchiveServiceType() {
-		return SpringContextService
-				.getBeansOfType(IGenerateArchiveService.class);
-	}
+    /*
+     * (non-Javadoc)
+     * @see fr.paris.lutece.plugins.archive.service.archive.IGenerateArchiveServiceFactory#getAllGenerateArchiveServiceType()
+     */
+    public Collection<IGenerateArchiveService> getAllGenerateArchiveServiceType(  )
+    {
+        return SpringContextService.getBeansOfType( IGenerateArchiveService.class );
+    }
 }
