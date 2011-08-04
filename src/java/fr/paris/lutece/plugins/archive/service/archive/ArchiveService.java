@@ -56,16 +56,20 @@ public class ArchiveService implements IArchiveService
 
     public ArchiveService(  )
     {
-        init(  );
     }
 
     /**
      * Initialize the Form service
      *
      */
-    public void init(  )
+    public Plugin getPlugin(  )
     {
-        _plugin = PluginService.getPlugin( ArchivePlugin.PLUGIN_NAME );
+        if ( _plugin == null )
+        {
+            _plugin = PluginService.getPlugin( ArchivePlugin.PLUGIN_NAME );
+        }
+
+        return _plugin;
     }
 
     /*
@@ -88,7 +92,7 @@ public class ArchiveService implements IArchiveService
             archiveItem.setArchiveType( strArchiveType );
             archiveItem.setState( ArchiveConstants.ARCHIVE_STATE_INITIAL );
             archiveItem.setArchiveMimeType( generateArchiveService.getMimeType(  ) );
-            nIdArchiveItem = ArchiveItemHome.create( archiveItem, _plugin );
+            nIdArchiveItem = ArchiveItemHome.create( archiveItem, getPlugin(  ) );
             archiveItem.setIdArchiveItem( nIdArchiveItem );
         }
 
@@ -102,7 +106,7 @@ public class ArchiveService implements IArchiveService
     public String informationArchive( int archiveItemKey )
     {
         String strState = ArchiveConstants.ARCHIVE_STATE_INITIAL;
-        ArchiveItem archiveItem = ArchiveItemHome.findByPrimaryKey( archiveItemKey, _plugin );
+        ArchiveItem archiveItem = ArchiveItemHome.findByPrimaryKey( archiveItemKey, getPlugin(  ) );
 
         if ( archiveItem != null )
         {
@@ -118,7 +122,7 @@ public class ArchiveService implements IArchiveService
      */
     public void removeArchive( int archiveItemKey )
     {
-        ArchiveItem archiveItem = ArchiveItemHome.findByPrimaryKey( archiveItemKey, _plugin );
+        ArchiveItem archiveItem = ArchiveItemHome.findByPrimaryKey( archiveItemKey, getPlugin(  ) );
 
         if ( archiveItem != null )
         {
@@ -131,7 +135,7 @@ public class ArchiveService implements IArchiveService
                 AppLogService.error( e );
             }
 
-            ArchiveItemHome.delete( archiveItemKey, _plugin );
+            ArchiveItemHome.delete( archiveItemKey, getPlugin(  ) );
         }
     }
 
@@ -146,14 +150,14 @@ public class ArchiveService implements IArchiveService
 
         do
         {
-            archiveItem = ArchiveItemHome.getNextArchiveItemQueue( _plugin );
+            archiveItem = ArchiveItemHome.getNextArchiveItemQueue( getPlugin(  ) );
 
             if ( archiveItem != null )
             {
                 newArchiveItem = new StringBuilder(  );
                 newArchiveItem.append( "New Archive Item " );
                 newArchiveItem.append( ArchiveUtil.getFilePath( archiveItem ) );
-                AppLogService.debug( newArchiveItem.toString(  ) );
+                AppLogService.info( newArchiveItem.toString(  ) );
                 sbLogs.append( " Start treatment " );
                 sbLogs.append( new Date(  ).toString(  ) );
                 sbLogs.append( newArchiveItem.toString(  ) );
@@ -163,7 +167,7 @@ public class ArchiveService implements IArchiveService
                 try
                 {
                     ArchiveItemHome.updateState( archiveItem.getIdArchiveItem(  ), ArchiveConstants.ARCHIVE_STATE_USED,
-                        _plugin );
+                        getPlugin(  ) );
                     generateArchiveService.archiveDirectory( archiveItem.getFolderToArchive(  ),
                         archiveItem.getArchiveDestination(  ), archiveItem.getArchiveName(  ) );
 
@@ -172,7 +176,7 @@ public class ArchiveService implements IArchiveService
                     sbLogs.append( "\r\n" );
 
                     ArchiveItemHome.updateState( archiveItem.getIdArchiveItem(  ),
-                        ArchiveConstants.ARCHIVE_STATE_FINAL, _plugin );
+                        ArchiveConstants.ARCHIVE_STATE_FINAL, getPlugin(  ) );
                 }
                 catch ( Exception e )
                 {
@@ -182,7 +186,7 @@ public class ArchiveService implements IArchiveService
                     sbLogs.append( new Date(  ).toString(  ) );
                     sbLogs.append( "\r\n" );
                     ArchiveItemHome.updateState( archiveItem.getIdArchiveItem(  ),
-                        ArchiveConstants.ARCHIVE_STATE_ERROR, _plugin );
+                        ArchiveConstants.ARCHIVE_STATE_ERROR, getPlugin(  ) );
                 }
             }
         }
