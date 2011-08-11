@@ -42,7 +42,9 @@
 		</dependency>
 
 	</dependencies>
-
+	<properties>
+		<jiraProjectName>ARCHIVE</jiraProjectName>
+	</properties>
 
 	 <scm>
         <connection>scm:svn:http://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/technical/plugin-archive</connection>
