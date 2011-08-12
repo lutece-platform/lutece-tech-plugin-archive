@@ -44,6 +44,7 @@
 	</dependencies>
 	<properties>
 		<jiraProjectName>ARCHIVE</jiraProjectName>
+		<jiraComponentId>10571</jiraComponentId>
 	</properties>
 
 	 <scm>
