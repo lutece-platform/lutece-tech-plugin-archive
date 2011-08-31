@@ -149,8 +149,8 @@ public class ZipGenerateService implements IGenerateArchiveService
                     strEntry.append( File.separator );
                     strDirectory = strEntry.toString(  );
 
-                    ZipEntry ze = new ZipEntry( strDirectory );
-                    zos.putNextEntry( ze );
+                    //ZipEntry ze = new ZipEntry( strDirectory );
+                    //zos.putNextEntry( ze );
 
                     // call zipDirectory
                     strEntry = new StringBuilder(  );
