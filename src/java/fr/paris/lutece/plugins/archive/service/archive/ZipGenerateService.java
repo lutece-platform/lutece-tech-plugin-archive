@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.archive.service.archive;
 
 import fr.paris.lutece.plugins.archive.util.ArchiveConstants;
 import fr.paris.lutece.portal.service.util.AppLogService;
+import fr.paris.lutece.util.string.StringUtil;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -145,7 +146,7 @@ public class ZipGenerateService implements IGenerateArchiveService
                     // add a new directory in zip
                     strEntry = new StringBuilder(  );
                     strEntry.append( path );
-                    strEntry.append( entries[j].getName(  ) );
+                    strEntry.append( StringUtil.replaceAccent( entries[j].getName(  ) ));
                     strEntry.append( File.separator );
                     strDirectory = strEntry.toString(  );
 
@@ -173,7 +174,7 @@ public class ZipGenerateService implements IGenerateArchiveService
                         bis = new FileInputStream( entries[j].getAbsolutePath(  ) );
 
                         // create a new entry in zip
-                        ZipEntry ze = new ZipEntry( path + entries[j].getName(  ) );
+                        ZipEntry ze = new ZipEntry( path +  StringUtil.replaceAccent(entries[j].getName(  ) ));
                         zos.putNextEntry( ze );
 
                         byte[] tab = new byte[ArchiveConstants.CONSTANTE_FILE_BUFFER];
