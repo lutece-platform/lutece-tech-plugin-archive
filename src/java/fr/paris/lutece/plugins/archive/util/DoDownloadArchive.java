@@ -42,6 +42,7 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -83,6 +84,8 @@ public class DoDownloadArchive
 
         if ( archiveItem != null )
         {
+        	File file = new File( ArchiveUtil.getFilePath( archiveItem ) );
+        	if ( file.exists(  ) )
             {
                 OutputStream os = null;
                 FileInputStream bis = null;
