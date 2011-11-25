@@ -36,6 +36,11 @@ package fr.paris.lutece.plugins.archive.business;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 
 
+/**
+ *
+ * IArchiveItemDAO
+ *
+ */
 public interface IArchiveItemDAO
 {
     /**
@@ -50,7 +55,6 @@ public interface IArchiveItemDAO
     * @param nIdArchiveItem the id of the archive item
     * @param strState the new state
     * @param plugin {@link Plugin}
-    *
     */
     void updateState( int nIdArchiveItem, String strState, Plugin plugin );
 
@@ -64,7 +68,7 @@ public interface IArchiveItemDAO
 
     /**
      * load the archive item wich the id is specified in parameter
-    * @param nKey the archive item id
+    * @param nIdArchiveItem the archive item id
     * @param plugin {@link Plugin}
     * @return {@link ArchiveItem}
      */

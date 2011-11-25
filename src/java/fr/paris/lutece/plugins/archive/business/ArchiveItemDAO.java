@@ -53,7 +53,7 @@ public class ArchiveItemDAO implements IArchiveItemDAO
 
     /**
      * Generates a new primary key
-     *
+     * @param plugin the {@link Plugin}
      * @return The new primary key
      */
     private int newPrimaryKey( Plugin plugin )
@@ -76,6 +76,9 @@ public class ArchiveItemDAO implements IArchiveItemDAO
         return nKey;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int nextArchiveItemId( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_NEXT_MAIL_ITEM_QUEUE_ID );
@@ -94,9 +97,8 @@ public class ArchiveItemDAO implements IArchiveItemDAO
         return nIdMailItemQueue;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.archive.business.IArchiveItemDAO#updateState(int, java.lang.String, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
     public void updateState( int nIdArchiveItem, String strState, Plugin plugin )
     {
@@ -108,9 +110,8 @@ public class ArchiveItemDAO implements IArchiveItemDAO
         daoUtil.free(  );
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.archive.business.IArchiveItemDAO#insert(fr.paris.lutece.plugins.archive.business.ArchiveItem, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
     public synchronized int insert( ArchiveItem archiveItem, Plugin plugin )
     {
@@ -131,9 +132,8 @@ public class ArchiveItemDAO implements IArchiveItemDAO
         return nIdPrimaryKey;
     }
 
-    /*
-     *  (non-Javadoc)
-     * @see fr.paris.lutece.plugins.archive.business.IArchiveItemDAO#load(int, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
     public ArchiveItem load( int nIdMailItemQueue, Plugin plugin )
     {
@@ -160,9 +160,8 @@ public class ArchiveItemDAO implements IArchiveItemDAO
         return archiveItem;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.archive.business.IArchiveItemDAO#delete(int, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
     public void delete( int nIdMailItemQueue, Plugin plugin )
     {

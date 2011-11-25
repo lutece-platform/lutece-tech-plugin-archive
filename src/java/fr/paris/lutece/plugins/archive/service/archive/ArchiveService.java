@@ -54,13 +54,16 @@ public class ArchiveService implements IArchiveService
     private Plugin _plugin;
     private IGenerateArchiveServiceFactory _generateArchiveServiceFactory;
 
+    /**
+     * Constructor
+     */
     public ArchiveService(  )
     {
     }
 
     /**
      * Initialize the Form service
-     *
+     * @return the plugin
      */
     public Plugin getPlugin(  )
     {
@@ -72,9 +75,8 @@ public class ArchiveService implements IArchiveService
         return _plugin;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.archive.service.archive.IArchiveService#generateArchive(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     public int generateArchive( String strFolderToArchive, String strArchiveDestination, String strArchiveName,
         String strArchiveType )
@@ -99,9 +101,8 @@ public class ArchiveService implements IArchiveService
         return nIdArchiveItem;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.archive.service.archive.IArchiveService#informationArchive(int)
+    /**
+     * {@inheritDoc}
      */
     public String informationArchive( int archiveItemKey )
     {
@@ -116,9 +117,8 @@ public class ArchiveService implements IArchiveService
         return strState;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.archive.service.archive.IArchiveService#removeArchive(int)
+    /**
+     * {@inheritDoc}
      */
     public void removeArchive( int archiveItemKey )
     {
@@ -139,9 +139,8 @@ public class ArchiveService implements IArchiveService
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.archive.service.archive.IArchiveService#runGenerateArchive(java.lang.StringBuilder)
+    /**
+     * {@inheritDoc}
      */
     public void runGenerateArchive( StringBuilder sbLogs )
     {
@@ -194,11 +193,11 @@ public class ArchiveService implements IArchiveService
     }
 
     /**
-     * setter of _generaArchiveServiceFactory
-     * @param _generaArchiveServiceFactory _generaArchiveServiceFactory
+     * Setter of generaArchiveServiceFactory
+     * @param generaArchiveServiceFactory The generate archive service factory
      */
-    public void setGenerateArchiveServiceFactory( IGenerateArchiveServiceFactory _generaArchiveServiceFactory )
+    public void setGenerateArchiveServiceFactory( IGenerateArchiveServiceFactory generaArchiveServiceFactory )
     {
-        this._generateArchiveServiceFactory = _generaArchiveServiceFactory;
+        this._generateArchiveServiceFactory = generaArchiveServiceFactory;
     }
 }

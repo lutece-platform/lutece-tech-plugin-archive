@@ -55,9 +55,8 @@ import java.util.zip.ZipOutputStream;
  */
 public class ZipGenerateService implements IGenerateArchiveService
 {
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.archive.service.archive.IGenerateArchiveService#archiveDirectory(java.lang.String, java.lang.String, java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     public void archiveDirectory( String strFolderToArchive, String strArchiveDestination, String strArchiveName )
         throws IOException, FileNotFoundException
@@ -89,19 +88,12 @@ public class ZipGenerateService implements IGenerateArchiveService
     }
 
     /**
-     * this Method zip a directory and all files contained in it.
-     *
-     * @param File
-     *            dir : directory to zip
-     * @param ZipOutputStream
-     *            zos : zip object
-     * @param String
-     *            path : Current path in the zip
-     *
-     * @return void
-     *
-     * @exception IOException
-     *                , FileNotFoundException
+     * This Method zip a directory and all files contained in it.
+     * @param dir : directory to zip
+     * @param zos : zip object
+     * @param path : Current path in the zip
+     * @throws IOException exception if there is an error during the operation
+     * @throws FileNotFoundException exception if the file is not found
      */
     private void zipDirectory( File dir, ZipOutputStream zos, String path )
         throws IOException, FileNotFoundException
@@ -113,19 +105,12 @@ public class ZipGenerateService implements IGenerateArchiveService
     }
 
     /**
-     * zip a given directory ( Recursive function )
-     *
-     * @param File
-     *            dir : Current directory to zip
-     * @param ZipOutputStream
-     *            zos : Zip object
-     * @param String
-     *            path : Current path in the zip object
-     *
-     * @return void
-     *
-     * @throws IOException
-     *             , FileNotFoundException
+     * Zip a given directory ( Recursive function )
+     * @param dir : Current directory to zip
+     * @param zos : Zip object
+     * @param path : Current path in the zip object
+     * @throws IOException exception if there is an error during the operation
+     * @throws FileNotFoundException exception if the file is not found
      */
     private void zipFileInDirectory( File dir, ZipOutputStream zos, String path )
         throws IOException, FileNotFoundException
@@ -146,7 +131,7 @@ public class ZipGenerateService implements IGenerateArchiveService
                     // add a new directory in zip
                     strEntry = new StringBuilder(  );
                     strEntry.append( path );
-                    strEntry.append( StringUtil.replaceAccent( entries[j].getName(  ) ));
+                    strEntry.append( StringUtil.replaceAccent( entries[j].getName(  ) ) );
                     strEntry.append( File.separator );
                     strDirectory = strEntry.toString(  );
 
@@ -174,7 +159,7 @@ public class ZipGenerateService implements IGenerateArchiveService
                         bis = new FileInputStream( entries[j].getAbsolutePath(  ) );
 
                         // create a new entry in zip
-                        ZipEntry ze = new ZipEntry( path +  StringUtil.replaceAccent(entries[j].getName(  ) ));
+                        ZipEntry ze = new ZipEntry( path + StringUtil.replaceAccent( entries[j].getName(  ) ) );
                         zos.putNextEntry( ze );
 
                         byte[] tab = new byte[ArchiveConstants.CONSTANTE_FILE_BUFFER];
@@ -203,22 +188,19 @@ public class ZipGenerateService implements IGenerateArchiveService
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.archive.service.archive.IGenerateArchiveService#getKey()
+    /**
+     * {@inheritDoc}
      */
     public String getKey(  )
     {
         return ArchiveConstants.ARCHIVE_TYPE_ZIP;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.archive.service.archive.IGenerateArchiveService#getMimeType()
+    /**
+     * {@inheritDoc}
      */
     public String getMimeType(  )
     {
-        // TODO Auto-generated method stub
         return ArchiveConstants.ARCHIVE_MIME_TYPE_ZIP;
     }
 }

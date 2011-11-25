@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2010, Mairie de Paris
+ * Copyright (c) 2002-2011, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,9 +43,8 @@ import java.util.Collection;
  */
 public class GenerateArchiveServiceFactory implements IGenerateArchiveServiceFactory
 {
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.archive.service.archive.IGenerateArchiveServiceFactory#getGenerateArchiveService(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     public IGenerateArchiveService getGenerateArchiveService( String strKey )
     {
@@ -67,9 +66,8 @@ public class GenerateArchiveServiceFactory implements IGenerateArchiveServiceFac
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.archive.service.archive.IGenerateArchiveServiceFactory#getAllGenerateArchiveServiceType()
+    /**
+     * {@inheritDoc}
      */
     public Collection<IGenerateArchiveService> getAllGenerateArchiveServiceType(  )
     {

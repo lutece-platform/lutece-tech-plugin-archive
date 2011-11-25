@@ -44,8 +44,15 @@ import java.io.FileNotFoundException;
  * @author merlinfe
  *
  */
-public class ArchiveUtil
+public final class ArchiveUtil
 {
+    /**
+     * Private constructor
+     */
+    private ArchiveUtil(  )
+    {
+    }
+
     /**
      * delete the file with the path parameter is provided
      * @param filePath the file path
@@ -85,7 +92,7 @@ public class ArchiveUtil
 
     /**
      * delete the file with the archiveItem parameter is provided
-     * @param filePath the archiveItem
+     * @param archiveItem the archiveItem
      * @throws Exception {@link Exception}
      */
     public static void deleteFile( ArchiveItem archiveItem )

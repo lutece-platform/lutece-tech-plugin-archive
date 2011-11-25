@@ -46,8 +46,11 @@ import java.util.Date;
  */
 public class DaemonArchive extends Daemon
 {
-    private IArchiveService archiveService;
+    private IArchiveService _archiveService;
 
+    /**
+     * Constructor
+     */
     public DaemonArchive(  )
     {
         super(  );
@@ -61,7 +64,7 @@ public class DaemonArchive extends Daemon
     {
         StringBuilder sbLogs = new StringBuilder(  );
         sbLogs.append( new Date(  ).toString(  ) );
-        archiveService.runGenerateArchive( sbLogs );
+        _archiveService.runGenerateArchive( sbLogs );
         sbLogs.append( "\r\nNo Archive " );
         setLastRunLogs( sbLogs.toString(  ) );
     }
@@ -71,6 +74,6 @@ public class DaemonArchive extends Daemon
      */
     public void init(  )
     {
-        archiveService = (IArchiveService) SpringContextService.getBean( "archive.archiveService" );
+        _archiveService = (IArchiveService) SpringContextService.getBean( "archive.archiveService" );
     }
 }

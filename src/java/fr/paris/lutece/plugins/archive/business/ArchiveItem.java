@@ -36,6 +36,11 @@ package fr.paris.lutece.plugins.archive.business;
 import java.io.Serializable;
 
 
+/**
+ *
+ * ArchiveItem
+ *
+ */
 public class ArchiveItem implements Serializable
 {
     private static final long serialVersionUID = 7661692993251106127L;
@@ -47,71 +52,127 @@ public class ArchiveItem implements Serializable
     private String _strArchiveType;
     private String _strArchiveMimeType;
 
+    /**
+     * Get the folder to archive
+     * @return the folder to archive
+     */
     public String getFolderToArchive(  )
     {
-        return this._strFolderToArchive;
+        return _strFolderToArchive;
     }
 
+    /**
+     * Set the folder to archive
+     * @param strFolderToArchive the folder to archive
+     */
     public void setFolderToArchive( String strFolderToArchive )
     {
-        this._strFolderToArchive = strFolderToArchive;
+        _strFolderToArchive = strFolderToArchive;
     }
 
+    /**
+     * Get the archive destination
+     * @return the archive destination
+     */
     public String getArchiveDestination(  )
     {
-        return this._strArchiveDestination;
+        return _strArchiveDestination;
     }
 
+    /**
+     * Set the archive destination
+     * @param strArchiveDestination archive destination
+     */
     public void setArchiveDestination( String strArchiveDestination )
     {
-        this._strArchiveDestination = strArchiveDestination;
+        _strArchiveDestination = strArchiveDestination;
     }
 
+    /**
+     * Get the archive name
+     * @return the archive name
+     */
     public String getArchiveName(  )
     {
-        return this._strArchiveName;
+        return _strArchiveName;
     }
 
+    /**
+     * Set the archive name
+     * @param strArchiveName the archive name
+     */
     public void setArchiveName( String strArchiveName )
     {
-        this._strArchiveName = strArchiveName;
+        _strArchiveName = strArchiveName;
     }
 
-    public void setIdArchiveItem( int _nIdArchiveItem )
+    /**
+     * Set the id archive item
+     * @param nIdArchiveItem the id archive item
+     */
+    public void setIdArchiveItem( int nIdArchiveItem )
     {
-        this._nIdArchiveItem = _nIdArchiveItem;
+        _nIdArchiveItem = nIdArchiveItem;
     }
 
+    /**
+     * Get the id archive item
+     * @return the id archive item
+     */
     public int getIdArchiveItem(  )
     {
-        return this._nIdArchiveItem;
+        return _nIdArchiveItem;
     }
 
-    public void setState( String _strState )
+    /**
+     * Set the state
+     * @param strState the state
+     */
+    public void setState( String strState )
     {
-        this._strState = _strState;
+        _strState = strState;
     }
 
+    /**
+     * Get the state
+     * @return the state
+     */
     public String getState(  )
     {
         return _strState;
     }
 
-    public void setArchiveType( String _strArchiveType )
+    /**
+     * Set the archive type
+     * @param strArchiveType the archive type
+     */
+    public void setArchiveType( String strArchiveType )
     {
-        this._strArchiveType = _strArchiveType;
+        _strArchiveType = strArchiveType;
     }
 
+    /**
+     * Get the archive type
+     * @return the archive type
+     */
     public String getArchiveType(  )
     {
         return _strArchiveType;
     }
 
-    public void setArchiveMimeType( String _strArchiveMimeType )
+    /**
+     * Set the archive mime type
+     * @param strArchiveMimeType the archive mime type
+     */
+    public void setArchiveMimeType( String strArchiveMimeType )
     {
-        this._strArchiveMimeType = _strArchiveMimeType;
+        _strArchiveMimeType = strArchiveMimeType;
     }
 
+    /**
+     * Get the archive mime type
+     * @return the archive mime type
+     */
     public String getArchiveMimeType(  )
     {
         return _strArchiveMimeType;

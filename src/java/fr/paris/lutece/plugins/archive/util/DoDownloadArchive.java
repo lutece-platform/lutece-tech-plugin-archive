@@ -56,8 +56,15 @@ import javax.servlet.http.HttpServletResponse;
  *  class DoDownloadGraph
  *
  */
-public class DoDownloadArchive
+public final class DoDownloadArchive
 {
+    /**
+     * Private constructor
+     */
+    private DoDownloadArchive(  )
+    {
+    }
+
     /**
      * Write in the http response the file to upload
      * @param request the http request
@@ -84,8 +91,9 @@ public class DoDownloadArchive
 
         if ( archiveItem != null )
         {
-        	File file = new File( ArchiveUtil.getFilePath( archiveItem ) );
-        	if ( file.exists(  ) )
+            File file = new File( ArchiveUtil.getFilePath( archiveItem ) );
+
+            if ( file.exists(  ) )
             {
                 OutputStream os = null;
                 FileInputStream bis = null;
