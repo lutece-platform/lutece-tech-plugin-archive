@@ -33,28 +33,25 @@
  */
 package fr.paris.lutece.plugins.archive.util;
 
-
 /**
- *
+ * 
  * Constants
- *
+ * 
  */
 public final class ArchiveConstants
 {
-    public static final String ARCHIVE_STATE_INITIAL = "INIT";
-    public static final String ARCHIVE_STATE_USED = "USED";
-    public static final String ARCHIVE_STATE_ERROR = "ERROR";
-    public static final String ARCHIVE_STATE_FINAL = "FINAL";
-    public static final String ARCHIVE_TYPE_ZIP = "ZIP";
-    public static final String ARCHIVE_MIME_TYPE_ZIP = "application/zip";
-    public static final String PARAM_ARCHIVE_ITEM_KEY = "archive_item_key";
-    public static final int CONSTANTE_FILE_BUFFER = 4096;
-    public static final String MESSAGE_ERROR_DURING_DOWNLOAD_FILE = "archive.message.error_during_download_file";
+	public static final String ARCHIVE_STATE_INITIAL = "INIT";
+	public static final String ARCHIVE_STATE_USED = "USED";
+	public static final String ARCHIVE_STATE_ERROR = "ERROR";
+	public static final String ARCHIVE_STATE_FINAL = "FINAL";
+	public static final String PARAM_ARCHIVE_ITEM_KEY = "archive_item_key";
+	public static final int CONSTANTE_FILE_BUFFER = 4096;
+	public static final String MESSAGE_ERROR_DURING_DOWNLOAD_FILE = "archive.message.error_during_download_file";
 
-    /**
-     * Constants
-     */
-    private ArchiveConstants(  )
-    {
-    }
+	/**
+	 * Constants
+	 */
+	private ArchiveConstants( )
+	{
+	}
 }

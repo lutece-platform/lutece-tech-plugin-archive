@@ -33,174 +33,40 @@
  */
 package fr.paris.lutece.plugins.archive.service.archive;
 
-import fr.paris.lutece.plugins.archive.util.ArchiveConstants;
-import fr.paris.lutece.portal.service.util.AppLogService;
-import fr.paris.lutece.util.string.StringUtil;
+import fr.paris.lutece.plugins.archive.util.ZipGenerateUtil;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 
 /**
  * Implementation of IGenerateArchiveService for create ZIP archive
  * @author merlinfe
- *
+ * 
  */
 public class ZipGenerateService implements IGenerateArchiveService
 {
-    /**
-     * {@inheritDoc}
-     */
-    public void archiveDirectory( String strFolderToArchive, String strArchiveDestination, String strArchiveName )
-        throws IOException, FileNotFoundException
-    {
-        BufferedOutputStream bos = null;
-        File folderToZip;
-        ZipOutputStream zos = null;
-        StringBuilder strDestinationFile = new StringBuilder(  );
-        strDestinationFile.append( strArchiveDestination );
-        strDestinationFile.append( File.separator );
-        strDestinationFile.append( strArchiveName );
+	/**
+	 * {@inheritDoc}
+	 */
+	public void archiveDirectory( String strFolderToArchive, String strArchiveDestination, String strArchiveName ) throws IOException, FileNotFoundException
+	{
+		ZipGenerateUtil.archiveDirectory( strFolderToArchive, strArchiveDestination, strArchiveName );
+	}
 
-        try
-        {
-            folderToZip = new File( strFolderToArchive );
-            bos = new BufferedOutputStream( new FileOutputStream( strDestinationFile.toString(  ) ) );
-            zos = new ZipOutputStream( bos );
-            zipDirectory( folderToZip, zos, "" );
-        }
-        catch ( Exception e )
-        {
-            AppLogService.error( e );
-        }
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getKey( )
+	{
+		return ZipGenerateUtil.getKey( );
+	}
 
-        finally
-        {
-            zos.close(  );
-        }
-    }
-
-    /**
-     * This Method zip a directory and all files contained in it.
-     * @param dir : directory to zip
-     * @param zos : zip object
-     * @param path : Current path in the zip
-     * @throws IOException exception if there is an error during the operation
-     * @throws FileNotFoundException exception if the file is not found
-     */
-    private void zipDirectory( File dir, ZipOutputStream zos, String path )
-        throws IOException, FileNotFoundException
-    {
-        if ( ( dir != null ) && dir.isDirectory(  ) )
-        {
-            zipFileInDirectory( dir, zos, path );
-        }
-    }
-
-    /**
-     * Zip a given directory ( Recursive function )
-     * @param dir : Current directory to zip
-     * @param zos : Zip object
-     * @param path : Current path in the zip object
-     * @throws IOException exception if there is an error during the operation
-     * @throws FileNotFoundException exception if the file is not found
-     */
-    private void zipFileInDirectory( File dir, ZipOutputStream zos, String path )
-        throws IOException, FileNotFoundException
-    {
-        StringBuilder strEntry = null;
-        String strDirectory = null;
-
-        if ( ( dir != null ) && dir.isDirectory(  ) )
-        {
-            File[] entries = dir.listFiles(  );
-            int sz = entries.length;
-
-            for ( int j = 0; j < sz; j++ )
-            {
-                // directory
-                if ( entries[j].isDirectory(  ) )
-                {
-                    // add a new directory in zip
-                    strEntry = new StringBuilder(  );
-                    strEntry.append( path );
-                    strEntry.append( StringUtil.replaceAccent( entries[j].getName(  ) ) );
-                    strEntry.append( File.separator );
-                    strDirectory = strEntry.toString(  );
-
-                    //ZipEntry ze = new ZipEntry( strDirectory );
-                    //zos.putNextEntry( ze );
-
-                    // call zipDirectory
-                    strEntry = new StringBuilder(  );
-                    strEntry.append( dir.getAbsolutePath(  ) );
-                    strEntry.append( File.separator );
-                    strEntry.append( entries[j].getName(  ) );
-
-                    File newDir = new File( strEntry.toString(  ) );
-                    zipDirectory( newDir, zos, strDirectory );
-                }
-
-                // file
-                else
-                {
-                    // read the file to zip
-                    FileInputStream bis = null;
-
-                    try
-                    {
-                        bis = new FileInputStream( entries[j].getAbsolutePath(  ) );
-
-                        // create a new entry in zip
-                        ZipEntry ze = new ZipEntry( path + StringUtil.replaceAccent( entries[j].getName(  ) ) );
-                        zos.putNextEntry( ze );
-
-                        byte[] tab = new byte[ArchiveConstants.CONSTANTE_FILE_BUFFER];
-                        int read = -1;
-
-                        do
-                        {
-                            read = bis.read( tab );
-
-                            if ( read > 0 )
-                            {
-                                zos.write( tab, 0, read );
-                            }
-                        }
-                        while ( read > 0 );
-
-                        zos.closeEntry(  );
-                    }
-
-                    finally
-                    {
-                        bis.close(  );
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getKey(  )
-    {
-        return ArchiveConstants.ARCHIVE_TYPE_ZIP;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getMimeType(  )
-    {
-        return ArchiveConstants.ARCHIVE_MIME_TYPE_ZIP;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getMimeType( )
+	{
+		return ZipGenerateUtil.getMimeType( );
+	}
 }
