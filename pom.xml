@@ -8,7 +8,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>fr.paris.lutece.plugins</groupId>
 	<artifactId>plugin-archive</artifactId>
-	<version>1.0.5-SNAPSHOT</version>
+	<version>1.0.5</version>
 	<name>Lutece archive plugin</name>
 	<description>archive plugin</description>
 	<packaging>lutece-plugin</packaging>
@@ -52,8 +52,8 @@
 	</properties>
 
 	 <scm>
-        <connection>scm:svn:http://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/technical/plugin-archive</connection>
-        <developerConnection>scm:svn:https://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/technical/plugin-archive</developerConnection>
-        <url>http://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/technical/plugin-archive</url>
+        <connection>scm:svn:http://dev.lutece.paris.fr/svn/lutece/portal/tags/plugin-archive-1.0.5</connection>
+        <developerConnection>scm:svn:https://dev.lutece.paris.fr/svn/lutece/portal/tags/plugin-archive-1.0.5</developerConnection>
+        <url>http://dev.lutece.paris.fr/svn/lutece/portal/tags/plugin-archive-1.0.5</url>
     </scm>
 </project>
