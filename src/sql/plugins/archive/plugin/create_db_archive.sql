@@ -1,3 +1,6 @@
+-- liquibase formatted sql
+-- changeset archive:create_db_archive.sql
+-- preconditions onFail:MARK_RAN onError:WARN
 DROP TABLE IF EXISTS archive_item;
 
 /*==============================================================*/
