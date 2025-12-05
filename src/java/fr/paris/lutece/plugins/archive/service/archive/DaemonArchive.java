@@ -34,9 +34,9 @@
 package fr.paris.lutece.plugins.archive.service.archive;
 
 import fr.paris.lutece.portal.service.daemon.Daemon;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
+import jakarta.enterprise.inject.spi.CDI;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 /**
@@ -63,7 +63,7 @@ public class DaemonArchive extends Daemon
     public void run(  )
     {
         StringBuilder sbLogs = new StringBuilder(  );
-        sbLogs.append( new Date(  ).toString(  ) );
+        sbLogs.append( LocalDateTime.now( ) );
         _archiveService.runGenerateArchive( sbLogs );
         sbLogs.append( "\r\nNo Archive " );
         setLastRunLogs( sbLogs.toString(  ) );
@@ -74,6 +74,6 @@ public class DaemonArchive extends Daemon
      */
     public void init(  )
     {
-        _archiveService = (IArchiveService) SpringContextService.getBean( "archive.archiveService" );
+        _archiveService = CDI.current( ).select( IArchiveService.class ).get(  );
     }
 }

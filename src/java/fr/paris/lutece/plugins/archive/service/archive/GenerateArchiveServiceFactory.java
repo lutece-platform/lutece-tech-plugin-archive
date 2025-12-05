@@ -33,16 +33,25 @@
  */
 package fr.paris.lutece.plugins.archive.service.archive;
 
-import fr.paris.lutece.portal.service.spring.SpringContextService;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Instance;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 
 /**
  * GenerateArchiveServiceFactory
  */
+@Named("archive.generateArchiveServiceFactory")
+@ApplicationScoped
 public class GenerateArchiveServiceFactory implements IGenerateArchiveServiceFactory
 {
+    @Inject
+    private Instance<IGenerateArchiveService> _listGenerateArchiveService;
+
     /**
      * {@inheritDoc}
      */
@@ -53,9 +62,7 @@ public class GenerateArchiveServiceFactory implements IGenerateArchiveServiceFac
             return null;
         }
 
-        Collection<IGenerateArchiveService> listGenerateArchiveService = getAllGenerateArchiveServiceType(  );
-
-        for ( IGenerateArchiveService generateArchiveService : listGenerateArchiveService )
+        for ( IGenerateArchiveService generateArchiveService : _listGenerateArchiveService )
         {
             if ( strKey.equals( generateArchiveService.getKey(  ) ) )
             {
@@ -71,6 +78,6 @@ public class GenerateArchiveServiceFactory implements IGenerateArchiveServiceFac
      */
     public Collection<IGenerateArchiveService> getAllGenerateArchiveServiceType(  )
     {
-        return SpringContextService.getBeansOfType( IGenerateArchiveService.class );
+        return _listGenerateArchiveService.stream( ).collect( Collectors.toList( ) );
     }
 }

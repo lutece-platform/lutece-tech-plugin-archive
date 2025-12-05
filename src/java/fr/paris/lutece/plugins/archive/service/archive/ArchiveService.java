@@ -40,6 +40,9 @@ import fr.paris.lutece.plugins.archive.util.ArchiveUtil;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.util.AppLogService;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import java.util.Date;
 
@@ -49,9 +52,13 @@ import java.util.Date;
  * @author merlinfe
  *
  */
+@Named("archive.archiveService")
+@ApplicationScoped
 public class ArchiveService implements IArchiveService
 {
     private Plugin _plugin;
+
+    @Inject
     private IGenerateArchiveServiceFactory _generateArchiveServiceFactory;
 
     /**
