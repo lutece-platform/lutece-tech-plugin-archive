@@ -34,6 +34,7 @@
 package fr.paris.lutece.plugins.archive.service.archive;
 
 import fr.paris.lutece.plugins.archive.util.ZipGenerateUtil;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -44,6 +45,7 @@ import java.io.IOException;
  * @author merlinfe
  * 
  */
+@ApplicationScoped
 public class ZipGenerateService implements IGenerateArchiveService
 {
 	/**
