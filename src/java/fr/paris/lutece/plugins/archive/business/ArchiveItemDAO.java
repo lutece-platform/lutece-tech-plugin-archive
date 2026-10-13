@@ -60,20 +60,20 @@ public class ArchiveItemDAO implements IArchiveItemDAO
      */
     private int newPrimaryKey( Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
-        daoUtil.executeQuery(  );
-
         int nKey;
 
-        if ( !daoUtil.next(  ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin ) )
         {
-            // if the table is empty
-            nKey = 1;
+            daoUtil.executeQuery(  );
+
+            if ( !daoUtil.next(  ) )
+            {
+                // if the table is empty
+                nKey = 1;
+            }
+
+            nKey = daoUtil.getInt( 1 ) + 1;
         }
-
-        nKey = daoUtil.getInt( 1 ) + 1;
-
-        daoUtil.free(  );
 
         return nKey;
     }
@@ -83,18 +83,17 @@ public class ArchiveItemDAO implements IArchiveItemDAO
      */
     public int nextArchiveItemId( Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_NEXT_MAIL_ITEM_QUEUE_ID );
-
-        daoUtil.executeQuery(  );
-
         int nIdMailItemQueue = -1;
 
-        if ( daoUtil.next(  ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_NEXT_MAIL_ITEM_QUEUE_ID ) )
         {
-            nIdMailItemQueue = daoUtil.getInt( 1 );
-        }
+            daoUtil.executeQuery(  );
 
-        daoUtil.free(  );
+            if ( daoUtil.next(  ) )
+            {
+                nIdMailItemQueue = daoUtil.getInt( 1 );
+            }
+        }
 
         return nIdMailItemQueue;
     }
@@ -104,12 +103,13 @@ public class ArchiveItemDAO implements IArchiveItemDAO
      */
     public void updateState( int nIdArchiveItem, String strState, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE_STATE, plugin );
-        daoUtil.setString( 1, strState );
-        daoUtil.setInt( 2, nIdArchiveItem );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE_STATE, plugin ) )
+        {
+            daoUtil.setString( 1, strState );
+            daoUtil.setInt( 2, nIdArchiveItem );
 
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+            daoUtil.executeUpdate(  );
+        }
     }
 
     /**
@@ -118,18 +118,18 @@ public class ArchiveItemDAO implements IArchiveItemDAO
     public synchronized int insert( ArchiveItem archiveItem, Plugin plugin )
     {
         int nIdPrimaryKey = newPrimaryKey( plugin );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin ) )
+        {
+            daoUtil.setInt( 1, nIdPrimaryKey );
+            daoUtil.setString( 2, archiveItem.getFolderToArchive(  ) );
+            daoUtil.setString( 3, archiveItem.getArchiveDestination(  ) );
+            daoUtil.setString( 4, archiveItem.getArchiveName(  ) );
+            daoUtil.setString( 5, archiveItem.getArchiveType(  ) );
+            daoUtil.setString( 6, archiveItem.getArchiveMimeType(  ) );
+            daoUtil.setString( 7, archiveItem.getState(  ) );
 
-        daoUtil.setInt( 1, nIdPrimaryKey );
-        daoUtil.setString( 2, archiveItem.getFolderToArchive(  ) );
-        daoUtil.setString( 3, archiveItem.getArchiveDestination(  ) );
-        daoUtil.setString( 4, archiveItem.getArchiveName(  ) );
-        daoUtil.setString( 5, archiveItem.getArchiveType(  ) );
-        daoUtil.setString( 6, archiveItem.getArchiveMimeType(  ) );
-        daoUtil.setString( 7, archiveItem.getState(  ) );
-
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+            daoUtil.executeUpdate(  );
+        }
 
         return nIdPrimaryKey;
     }
@@ -141,23 +141,23 @@ public class ArchiveItemDAO implements IArchiveItemDAO
     {
         ArchiveItem archiveItem = null;
 
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_LOAD_ARCHIVE_ITEM, plugin );
-        daoUtil.setInt( 1, nIdMailItemQueue );
-        daoUtil.executeQuery(  );
-
-        if ( daoUtil.next(  ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_LOAD_ARCHIVE_ITEM, plugin ) )
         {
-            archiveItem = new ArchiveItem(  );
-            archiveItem.setIdArchiveItem( daoUtil.getInt( 1 ) );
-            archiveItem.setFolderToArchive( daoUtil.getString( 2 ) );
-            archiveItem.setArchiveDestination( daoUtil.getString( 3 ) );
-            archiveItem.setArchiveName( daoUtil.getString( 4 ) );
-            archiveItem.setArchiveType( daoUtil.getString( 5 ) );
-            archiveItem.setArchiveMimeType( daoUtil.getString( 6 ) );
-            archiveItem.setState( daoUtil.getString( 7 ) );
-        }
+            daoUtil.setInt( 1, nIdMailItemQueue );
+            daoUtil.executeQuery(  );
 
-        daoUtil.free(  );
+            if ( daoUtil.next(  ) )
+            {
+                archiveItem = new ArchiveItem(  );
+                archiveItem.setIdArchiveItem( daoUtil.getInt( 1 ) );
+                archiveItem.setFolderToArchive( daoUtil.getString( 2 ) );
+                archiveItem.setArchiveDestination( daoUtil.getString( 3 ) );
+                archiveItem.setArchiveName( daoUtil.getString( 4 ) );
+                archiveItem.setArchiveType( daoUtil.getString( 5 ) );
+                archiveItem.setArchiveMimeType( daoUtil.getString( 6 ) );
+                archiveItem.setState( daoUtil.getString( 7 ) );
+            }
+        }
 
         return archiveItem;
     }
@@ -167,9 +167,10 @@ public class ArchiveItemDAO implements IArchiveItemDAO
      */
     public void delete( int nIdMailItemQueue, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_ARCHIVE_ITEM, plugin );
-        daoUtil.setInt( 1, nIdMailItemQueue );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_ARCHIVE_ITEM, plugin ) )
+        {
+            daoUtil.setInt( 1, nIdMailItemQueue );
+            daoUtil.executeUpdate(  );
+        }
     }
 }
